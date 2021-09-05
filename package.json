@@ -1,5 +1,5 @@
 {
-  "name": "dadi",
+  "name": "dice_game",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -18,5 +18,6 @@
     "mysql2": "^2.2.5",
     "sequelize": "^6.6.5",
     "umzug": "^3.0.0-beta.16"
-  }
+  },
+  "devDependencies": {}
 }
