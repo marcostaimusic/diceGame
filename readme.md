@@ -1,6 +1,6 @@
 `npm install`
 
-and then 
+and then execute
 
 `node app`
 
