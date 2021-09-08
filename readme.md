@@ -1,3 +1,11 @@
+`npm install`
+
+and then 
+
+`node app`
+
+to run the API. Before running the app, follow these instruction to set up the .env variables.
+
 Create a .env file with the following details, and give the parameters the correct values according to your configuration.
 The value in BBDD must be either "sql" or "mongo" to choose the database you wish to work with.
 
