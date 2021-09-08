@@ -18,7 +18,7 @@ async function getAverageRate (req, res){
         const rates = players.map(player => player.successRate)
         const reducer = (accumulator, currentValue) => accumulator + currentValue
         const average = Math.round(rates.reduce(reducer) / rates.length * 100) / 100
-        return res.json(`The average successRate is ${average}`)
+        return res.json({message: `The average successRate is ${average}`})
         } else {
             return res.json({message: " There are no players in the db"})
         }

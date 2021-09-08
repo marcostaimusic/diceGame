@@ -12,6 +12,7 @@ const config = {
 
 async function createPlayer(req, res){
     const { name } = req.body
+    console.log(name)
     await connect(process.env.CONNECTIONURL, config)
     console.log('Connected to MongoDB')
     if (name === undefined || name === 'Anonim'){
@@ -49,10 +50,10 @@ async function createPlayer(req, res){
 
 
 async function changeName(req, res){
-    const { _id, name } = req.body
+    const { id, name } = req.body
     try { 
         await connect(process.env.CONNECTIONURL, config)
-        const player = await Player.findById({ _id })
+        const player = await Player.findById({ _id: id })
         const existingName = await Player.find({ name })
         if (player && existingName.length===0) {
             player.name = name

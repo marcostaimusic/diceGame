@@ -33,7 +33,7 @@ async function getLoser(req, res) {
             res.json({message: 'It\'s a tie', winners: loser})
         } else {
         console.log(loser)
-        return res.json(loser)
+        return res.json({message: "The loser is ", loser})
         }
     } catch(err){
         console.log(err)
@@ -49,7 +49,7 @@ async function getWinner(req, res) {
             return res.json({message: 'All players suck', losers: winner})
         } else {       
         console.log(winner)
-        return res.json(winner)
+        return res.json({message: "The winner is ", winner})
         }
     } catch(err){
         console.log(err)
