@@ -22,7 +22,7 @@ Sample parameters for Sequelize (change them according to your configuration): <
 
 Sample parameters for Mongo (change them according to your configuration)
 
-`CONNECTIONURL = mongodb://localhost:27017/diceGame`
+`CONNECTIONURL = mongodb://localhost:27017/`
 
 And finally, write some text for the JWT private Key: <br>
 `JWTPRIVATEKEY = someRandomText`
