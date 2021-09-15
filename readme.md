@@ -37,9 +37,10 @@ When creating a user, you can:
 - assign it the value of an empty string to create an anonimous player
 - totally delete the req.body to create an anonimous player
 
-For MongoDB, the api will check if there is a database with the same name - case insensitive - on your machine and drop it as soon as you start the api to avoid this error, which comes from having a database with the same name but with different capitalized letters:
+For MongoDB, the api will check if there is a database with the same name - case insensitive - on your machine and drop it as soon as you start the api to avoid this error, which comes from having a database with the same name but with different capitalized letters: <br>
 `{`<br>
 `"index": 0,`<br>
 `"code": 13297`<br>
 `}`<br>
 
+The .env-example file also contains some settings for the debug module, which is used in the mongo implementation of the API to log the returns of the controllers. Leave `app:controllers` to console.log the debugger messages, or delete the `DEBUGGER = `value to hide the logs.
