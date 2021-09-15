@@ -20,15 +20,9 @@ Sample parameters for Sequelize (change them according to your configuration): <
 `PASSWORD_SQL = 1234` <br>
 `HOST_SQL = 127.0.0.1` <br>
 
-<<<<<<< HEAD
-Sample parameters for Mongo (change them according to your configuration)
-
-`CONNECTIONURL = mongodb://localhost:27017/diceGame`
-=======
 Sample parameters for Mongo (change them according to your configuration), and set the `DATABASE = ` as well:
 
 `CONNECTIONURL = mongodb://localhost:27017/`
->>>>>>> a3909082036a9e94c942f0be899d1ff1edb3f1ef
 
 And finally, write some text for the JWT private Key: <br>
 `JWTPRIVATEKEY = someRandomText`
@@ -43,17 +37,10 @@ When creating a user, you can:
 - assign it the value of an empty string to create an anonimous player
 - totally delete the req.body to create an anonimous player
 
-<<<<<<< HEAD
-For MongoDB, the api will check if there is a database with the same name - case insensitive - on your machine and drop it as soon as you start the api to avoid this error, which comes from having a database with the same name but with different capitalized letters:
-=======
-For MongoDB, the api will check if there is a database with the same name - case insensitive - on your machine and drop it as soon as you start the api to avoid this error, which comes from having a database with the same name but with different capitalized letters: <br>
->>>>>>> a3909082036a9e94c942f0be899d1ff1edb3f1ef
+For MongoDB, the API will check if there is a database with the same name - case insensitive - on your machine and drop it as soon as you start the api to avoid this error, which comes from having a database with the same name but with different capitalized letters: <br>
 `{`<br>
 `"index": 0,`<br>
 `"code": 13297`<br>
 `}`<br>
 
-<<<<<<< HEAD
-=======
 The .env-example file also contains some settings for the debug module, which is used in the mongo implementation of the API to log the returns of the controllers. Leave `app:controllers` to console.log the debugger messages, or delete the `DEBUGGER = `value to hide the logs.
->>>>>>> a3909082036a9e94c942f0be899d1ff1edb3f1ef
