@@ -20,7 +20,7 @@ Sample parameters for Sequelize (change them according to your configuration): <
 `PASSWORD_SQL = 1234` <br>
 `HOST_SQL = 127.0.0.1` <br>
 
-Sample parameters for Mongo (change them according to your configuration)
+Sample parameters for Mongo (change them according to your configuration), and set the `DATABASE = ` as well:
 
 `CONNECTIONURL = mongodb://localhost:27017/`
 
