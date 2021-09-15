@@ -4,6 +4,7 @@ const { connect, connection } = require('mongoose')
 const Mongoose = require('mongoose')
 const Game = require('../models/game')
 const Player = require('../models/player')
+const mongoUri = `${process.env.CONNECTIONURL}${process.env.DATABASE}`
 
 const config = {
     useNewUrlParser: true,
@@ -11,7 +12,7 @@ const config = {
 }
 
 async function getAverageRate (req, res){
-    await connect(process.env.CONNECTIONURL, config)
+    await connect(mongoUri, config)
     try{
         const players = await Player.find()
         if(players.length != 0) {
@@ -29,7 +30,7 @@ async function getAverageRate (req, res){
 }
 
 async function getLoser (req, res) {
-    await connect(process.env.CONNECTIONURL, config)
+    await connect(mongoUri, config)
     try{
         const players = await Player.find()
         if(players.length != 0) {
@@ -56,7 +57,7 @@ async function getLoser (req, res) {
 
 
 async function getWinner (req, res) {
-    await connect(process.env.CONNECTIONURL, config)
+    await connect(mongoUri, config)
     try{
         const players = await Player.find()
         if(players.length != 0) {

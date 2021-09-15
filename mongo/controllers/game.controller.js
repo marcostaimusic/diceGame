@@ -4,7 +4,7 @@ const { connect, connection } = require('mongoose')
 const Mongoose = require('mongoose') 
 const Game = require('../models/game')
 const Player = require('../models/player')
-
+const mongoUri = `${process.env.CONNECTIONURL}${process.env.DATABASE}`
 const config = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -15,7 +15,7 @@ async function playgame(req, res) {
     const dice1 = Math.ceil(Math.random() * 6)
     const dice2 = Math.ceil(Math.random() * 6)
     const result = dice1 + dice2 == 7 ? 1 : 0
-    await connect(process.env.CONNECTIONURL, config)
+    await connect(mongoUri, config)
     console.log('Connected to MongoDB')
 
     try {
@@ -64,7 +64,7 @@ async function playgame(req, res) {
 
 async function deleteGames (req, res){
     const id = req.params.id
-    await connect(process.env.CONNECTIONURL, config)
+    await connect(mongoUri, config)
     try{
         const existingPlayer = await Player.findById(id)
         controllerDebugger(existingPlayer)
@@ -75,7 +75,7 @@ async function deleteGames (req, res){
                     gamePlayedByPlayer[i].player = null
                     await gamePlayedByPlayer[i].save()
                 }
-                return res.json(gamePlayedByPlayer)
+                return res.json({message: `The games for player ${existingPlayer.name} have been erased`, gamePlayedByPlayer})
             } else {
                 return res.json({message: "No games recorded for this player"})
             }
@@ -94,13 +94,13 @@ async function deleteGames (req, res){
 
 async function getGames(req, res){
     const id = req.params.id
-    await connect(process.env.CONNECTIONURL, config)
+    await connect(mongoUri, config)
     try{
         const existingPlayer = await Player.findById(id)
         if (existingPlayer) {
             const gamesPlayed = await Game.find({ player : id })
             if (gamesPlayed.length!=0) {
-                return res.json(gamesPlayed)
+                return res.json({message: `The player ${existingPlayer.name} has played the following games: `, gamesPlayed})
             } else {
                 return res.json({message: "No games recorded for this player"})
             }

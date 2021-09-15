@@ -4,10 +4,17 @@ const bbdd = process.env.BBDD;
 var mysql = require('mysql2');
 const { Sequelize } = require('sequelize')
 const { Umzug, SequelizeStorage } = require('umzug')
+const { connect, connection } = require('mongoose')
+const mongoose = require('mongoose'), Admin = mongoose.mongo.Admin;
 console.log(bbdd)
 
+const config = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}
 
-function checkAndCreate (){
+
+function checkAndCreateSQL (){
         var con = mysql.createConnection({
           host: process.env.HOST_SQL,
           user: process.env.USERNAME_SQL,
@@ -93,7 +100,42 @@ function checkAndCreate (){
         });
 }
 
-module.exports = {checkAndCreate: checkAndCreate}
+function checkAndCreateMONGO(){
+ /// create a connection to the DB    
+  var connection = mongoose.createConnection(process.env.CONNECTIONURL, config);
+  
+  connection.on('open', function() {
+  // connection established
+  new Admin(connection.db).listDatabases(function(err, result) {
+      console.log('listDatabases succeeded');
+      // database list stored in result.databases
+      var allDatabases = result.databases; 
+      console.log(allDatabases)      
+
+      var dbName = process.env.DATABASE
+    
+      for(i=0; i<allDatabases.length; i++){
+        if (allDatabases[i].name.toLowerCase() === dbName.toLowerCase()){
+            console.log(allDatabases[i].name)
+            var newConn = mongoose.createConnection(process.env.CONNECTIONURL+allDatabases[i].name)
+            newConn.dropDatabase()
+            // newConn.close() // throws connection error
+        }
+      }
+      
+  });
+  
+})
+
+}
+
+
+
+
+module.exports = {
+  checkAndCreateSQL: checkAndCreateSQL, 
+  checkAndCreateMONGO: checkAndCreateMONGO
+}
 
 
 

@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     name: 
     { type: DataTypes.STRING,
       validate: {
-        len: [2, 10]
+        len: {args: [2, 255], msg: "The name should be between 2 and 255 characters long"}
       },
       defaultValue:'Anonim',
       allowNull: false

@@ -35,7 +35,7 @@ async function playGame(req, res){
                 gameResult = "lost"
             }
 
-            return res.json({playerUpdated, gameResult})
+            return res.json({message: `The player ${playerUpdated.name} has played a game`, playerUpdated, gameResult})
         } else {
             res.json({message: 'Player not in the db'})
         };
@@ -52,7 +52,7 @@ async function deleteGames(req, res) {
         await Player.update({gamesCounter: 0}, {where: { id }})
         await Game.update({PlayerId: null }, { where: { PlayerId : id }})
         const updatedPlayer = await Player.findByPk(id)
-        return res.json(updatedPlayer)
+        return res.json({message: "Deleted the games for the player:", updatedPlayer})
     } catch(err) {
         console.log(err)
         return res.status(500).json(err)
@@ -71,17 +71,18 @@ async function getGames(req, res) {
             } else if (player && games.length === 0) {
                 return res.json({message: 'This player has played no games'})
             } else {
-            res.json(games.map(game=>{ 
-                let result
-                if(game.result===true){
-                    result = 'win'
-                } else {
-                    result = 'lost'
-                }
-
-                return {dice1: game.dice1, dice2: game.dice2, result, played: game.createdAt}
-
-            }))
+                const gamePlayed = games.map(game=>{ 
+                    let result
+                    if(game.result===true){
+                        result = 'win'
+                    } else {
+                        result = 'lost'
+                    }
+    
+                    return {dice1: game.dice1, dice2: game.dice2, result, played: game.createdAt}
+    
+                })
+            res.json({message: `The player ${player.name} has played: `, gamePlayed})
             }
         } catch(err) {
             console.log(err)

@@ -2,7 +2,8 @@ require('dotenv').config()
 const controllerDebugger = require('debug')('app:controllers')
 const { connect, connection } = require('mongoose')
 const mongoose = require('mongoose')
-const  Player  = require('../models/player')
+const   Player  = require('../models/player')
+const mongoUri = `${process.env.CONNECTIONURL}${process.env.DATABASE}`
 
 const config = {
     useNewUrlParser: true,
@@ -13,14 +14,14 @@ const config = {
 async function createPlayer(req, res){
     const { name } = req.body
     console.log(name)
-    await connect(process.env.CONNECTIONURL, config)
+    await connect(mongoUri, config)
     console.log('Connected to MongoDB')
-    if (name === undefined || name === 'Anonim'){
+    if (name === undefined || name === 'Anonim' || name === ''){
         try {
             const player = new Player({ _id: new mongoose.Types.ObjectId()})
             await player.save()
             connection.close()
-            res.send(player)
+            res.send({message: 'Player created:', player})
             return player
         } catch (err){
             connection.close()
@@ -36,7 +37,7 @@ async function createPlayer(req, res){
                 const player = new Player ({ _id : new mongoose.Types.ObjectId(), name })
                 await player.save()
                 connection.close()
-                res.send(player)
+                res.send({message: 'Player created:', player})
                 return player
             } catch (err) {
                 connection.close()
@@ -52,13 +53,14 @@ async function createPlayer(req, res){
 async function changeName(req, res){
     const { id, name } = req.body
     try { 
-        await connect(process.env.CONNECTIONURL, config)
+        await connect(mongoUri, config)
+        const oldNamedplayer = await Player.findById({ _id: id })
         const player = await Player.findById({ _id: id })
         const existingName = await Player.find({ name })
         if (player && existingName.length===0) {
             player.name = name
             await player.save()
-            res.send(player)
+            res.send({message: `The player ${oldNamedplayer.name} is now ${player.name}`, player})
             connection.close()
             return player
         } else if(!player){
@@ -75,7 +77,7 @@ async function changeName(req, res){
 
 async function getPlayers (req, res) {
     try {
-        await connect(process.env.CONNECTIONURL, config)
+        await connect(mongoUri, config)
         const players = await Player.find()
 
         if(players.length === 0) {
