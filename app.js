@@ -1,5 +1,5 @@
 require('dotenv').config()
-const {checkAndCreate} = require('./dbCreate')
+const {checkAndCreateSQL, checkAndCreateMONGO} = require('./dbCreate')
 const express = require('express')
 const app = express()
 const port = process.env.PORT
@@ -12,7 +12,8 @@ const loginRoute = require('./routes/login')
 
 
 
-if (process.env.BBDD === 'sql') {checkAndCreate()} 
+if (process.env.BBDD === 'sql') {checkAndCreateSQL()} 
+else if (process.env.BBDD === 'mongo') {checkAndCreateMONGO()}
 
 
 
